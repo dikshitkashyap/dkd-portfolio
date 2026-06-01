@@ -310,6 +310,7 @@ nav {
 
 .card-back {
   transform: rotateY(180deg);
+  text-align: left;
 }
 
 .card-front {
@@ -372,6 +373,7 @@ nav {
   color: #444;
   margin-bottom: 4px;
   text-transform: uppercase;
+  text-align: left;
 }
 
 .card-name {
@@ -379,6 +381,7 @@ nav {
   font-size: 16px;
   color: #E0E0E0;
   letter-spacing: 0.02em;
+  text-align: left;
 }
 
 .card-mono {
@@ -416,6 +419,7 @@ nav {
   font-style: italic;
   color: #aaa;
   letter-spacing: 0.02em;
+  text-align: left;
 }
 
 .card-cvv-box {
@@ -444,6 +448,7 @@ nav {
   color: #888;
   text-transform: uppercase;
   margin-bottom: 6px;
+  text-align: left;
 }
 
 .card-fine {
@@ -453,6 +458,7 @@ nav {
   font-weight: 300;
   line-height: 1.7;
   color: #888;
+  text-align: left;
 }
 
 .card-back-bottom {
@@ -471,12 +477,14 @@ nav {
   color: #777;
   margin-bottom: 3px;
   text-transform: uppercase;
+  text-align: left;
 }
 
 .card-service-email {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   color: #aaa;
+  text-align: left;
 }
 
 .card-otw {
