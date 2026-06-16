@@ -1,0 +1,92 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║              IOCL CASE STUDY SYNC GUIDE                                    ║
+║              How to Keep Obsidian & Website in Sync                        ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📍 YOUR FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Obsidian Source:
+  /Users/dikshit/Documents/Documentation/Case_IOCL_Final.md
+
+Portfolio Website:
+  /Users/dikshit/Portfolio-2026/dkd-portfolio/case-iocl.html
+
+Images (all ready to use):
+  /Users/dikshit/Portfolio-2026/dkd-portfolio/images/
+    - Friction.png
+    - Surfacing fallback.png
+    - impact_2.png
+
+Backup Markdown:
+  /Users/dikshit/Portfolio-2026/dkd-portfolio/case-iocl-source.md
+
+
+🔄 THE SYNC WORKFLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Edit in Obsidian
+  → Make your changes to Case_IOCL_Final.md
+  → Save when done
+
+STEP 2: Tell Copilot
+  → Message: "Update IOCL case study on the website"
+  → Include any notes about new images or changes
+
+STEP 3: I Handle It
+  → Read your updated markdown
+  → Convert to HTML (preserves all your content)
+  → Update case-iocl.html
+  → Verify the website looks correct
+
+STEP 4: Done!
+  → Website is live with your changes
+  → Images display correctly
+  → All styling maintained
+
+
+📋 CURRENT SECTIONS IN CASE STUDY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+01. Context - Background on IOCL partnership
+02. Why IOCL - Why this case study matters
+03. The Problem - Drop-off analysis with stats
+04. Customer & Agent Behavior - Understanding two user types
+05. Mobile App Design - Friction through sequencing
+06. Ops Portal Design - Friction through accountability
+07. Impact - Before/after conversion metrics
+08. Takeaway - Key design principles
+
+
+🎯 WHEN YOU HAVE NEW IMAGES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Export from Obsidian to your computer
+2. Copy to: /Users/dikshit/Portfolio-2026/dkd-portfolio/images/
+3. Use in markdown: [[image-name.png]]
+4. Tell me: "Added new image [name] to images folder"
+5. I'll update the HTML to reference it
+
+
+✅ QUICK REFERENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Website URL (local):
+  file:///Users/dikshit/Portfolio-2026/dkd-portfolio/case-iocl.html
+
+Content stays in:
+  /Users/dikshit/Documents/Documentation/Case_IOCL_Final.md
+
+Everything renders to:
+  /Users/dikshit/Portfolio-2026/dkd-portfolio/case-iocl.html
+
+Images always go to:
+  /Users/dikshit/Portfolio-2026/dkd-portfolio/images/
+
+
+🚀 YOU'RE ALL SET!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Just keep editing in Obsidian and tell me when you want to sync.
+I'll handle everything else!
+
