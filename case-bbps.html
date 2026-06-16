@@ -132,7 +132,7 @@ footer{border-top:1px solid #111;padding:32px 48px}
   <p class="cs-body">BlackBuck is India's largest digital trucking platform. The user base spans individual owner-operators with 1–3 trucks to large fleet owners (LFOs) managing 50–100+ vehicles remotely. For trucks with non-partner bank FASTags, drivers were leaving the app entirely to recharge on PhonePe, GPay, or Paytm.</p>
   <p class="cs-body"><strong>BBPS (Bharat Bill Payment System)</strong> is an RBI-mandated interoperable bill payment platform operated by NPCI. For BlackBuck, it was the regulatory pathway to enable recharges for non-partner bank FASTags inside the app. Without it, there was no compliant way to do it.</p>
   <p class="cs-body">As an <strong>Agent Institution</strong> under BBPS, BlackBuck's UI had to meet NPCI's front-end compliance standards before the feature could go live. This wasn't an internal review — it required formal sign-off from the regulator.</p>
-  <div class="cs-image"><div class="cs-image-placeholder">📎 Add: BBPS hierarchy diagram — NBBL/NPCI → PayU (BBPOU) → BlackBuck (Agent) → Users</div></div>
+  <div class="cs-image"><div class="cs-image-placeholder">� BBPS hierarchy diagram showing NBBL/NPCI → PayU (BBPOU) → BlackBuck (Agent) → Users</div></div>
 </div>
 
 <!-- PROBLEM -->
@@ -154,7 +154,7 @@ footer{border-top:1px solid #111;padding:32px 48px}
     <span class="cs-decision-num">DECISION 01</span>
     <h3 class="cs-decision-title">Anchor on super-app patterns, not trucking app patterns</h3>
     <p class="cs-decision-body">Once field research surfaced that PhonePe and GPay were the real competition, I studied their FASTag recharge flows in depth — information architecture, vehicle entry patterns, recharge confirmation states, and error handling. The design language had to feel instantly familiar to someone who'd done this on GPay a dozen times.</p>
-    <div class="cs-image"><div class="cs-image-placeholder">📎 Add: Competitive reference — PhonePe / GPay FASTag recharge screens</div></div>
+    <div class="cs-image"><div class="cs-image-placeholder">� Competitive reference screen visuals from PhonePe / GPay FASTag recharge flows</div></div>
   </div>
 
   <div class="cs-decision">
@@ -162,7 +162,7 @@ footer{border-top:1px solid #111;padding:32px 48px}
     <h3 class="cs-decision-title">V1: 'Decision First' flow — tested and failed</h3>
     <p class="cs-decision-body">The first version presented two distinct entry points: one for partner-bank FASTags, one for BBPS recharges. 87% completed the flow on first attempt. But when asked to repeat a recharge for the same truck, <strong>62% couldn't find their way back</strong>. And <strong>38% couldn't locate their existing trucks</strong> — the new BBPS section had broken the mental model they'd built around the FASTag homepage.</p>
     <p class="cs-decision-body" style="margin-top:16px">A flow that worked once but failed on repeat was not a working flow.</p>
-    <div class="cs-image"><div class="cs-image-placeholder">📎 Add: V1 — Decision First flow with usability failure data annotated</div></div>
+    <div class="cs-image"><div class="cs-image-placeholder">� V1 Decision First flow with usability failure annotations showing repeated recharge issues</div></div>
   </div>
 
   <div class="cs-decision">
@@ -175,14 +175,14 @@ footer{border-top:1px solid #111;padding:32px 48px}
     </div>
     <p class="cs-decision-body" style="margin-top:16px">The case for removing biller selection was strongest for <strong>large fleet owners (LFOs)</strong>. An LFO managing 50+ trucks remotely almost certainly doesn't know which bank issued each vehicle's FASTag — not without calling the driver on the ground. Biller selection wasn't just friction. It was an operational blocker.</p>
     <p class="cs-decision-body" style="margin-top:16px">After a month of negotiation across three parties (BlackBuck, PayU, NBBL), NPCI approved the deviation. The biller change option post-fetch was retained as the compliance concession.</p>
-    <div class="cs-image"><div class="cs-image-placeholder">📎 Add: VRN auto-fetch flow — the NPCI-approved deviation</div></div>
+    <div class="cs-image"><div class="cs-image-placeholder">� VRN auto-fetch flow illustrating the NPCI-approved deviation from standard biller selection</div></div>
   </div>
 
   <div class="cs-decision">
     <span class="cs-decision-num">DECISION 03</span>
     <h3 class="cs-decision-title">V2: Collapse the distinction, pre-populate the trucks</h3>
     <p class="cs-decision-body">In a driver's mental model, there is no "BBPS recharge" vs. a "FASTag recharge." There is only "recharge my truck." So rather than carving out a separate section, we pre-populated non-partner bank trucks into the same vehicle list — grouped alongside partner-bank trucks. The BBPS rail handled the transaction invisibly.</p>
-    <div class="cs-image"><div class="cs-image-placeholder">📎 Add: V2 — Unified vehicle list with pre-populated trucks</div></div>
+    <div class="cs-image"><div class="cs-image-placeholder">� V2 unified vehicle list with pre-populated trucks and hidden BBPS rail</div></div>
   </div>
 </div>
 
@@ -194,8 +194,8 @@ footer{border-top:1px solid #111;padding:32px 48px}
     <div class="cs-compare-col"><span class="cs-compare-label">V1 — DECISION FIRST</span><p class="cs-compare-body" style="margin-bottom:12px"><strong style="font-size:28px;color:#FF6B6B;font-family:'DM Serif Display',serif">62%</strong><br>could repeat a recharge</p><p class="cs-compare-body"><strong style="font-size:28px;color:#FF6B6B;font-family:'DM Serif Display',serif">38%</strong><br>could locate existing trucks</p></div>
     <div class="cs-compare-col"><span class="cs-compare-label">V2 — UNIFIED LIST</span><p class="cs-compare-body" style="margin-bottom:12px"><strong style="font-size:28px;color:#4ADE80;font-family:'DM Serif Display',serif">90%+</strong><br>task repeatability — restored</p><p class="cs-compare-body"><strong style="font-size:28px;color:#4ADE80;font-family:'DM Serif Display',serif">90%+</strong><br>vehicle discoverability — restored</p></div>
   </div>
-  <div class="cs-image"><div class="cs-image-placeholder">📎 Add: BBPS compliance callouts — constraints that shaped the UI</div></div>
-  <div class="cs-image"><div class="cs-image-placeholder">📎 Add: Error and failure states</div></div>
+  <div class="cs-image"><div class="cs-image-placeholder">� BBPS compliance callouts and UI constraints that shaped the final design</div></div>
+  <div class="cs-image"><div class="cs-image-placeholder">� Error and failure state illustrations for the recharge flow</div></div>
 </div>
 
 <!-- REFLECTION -->
