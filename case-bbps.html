@@ -207,6 +207,13 @@ footer{border-top:1px solid #111;padding:32px 48px}
 </div>
 
 </div>
+<div class="cs-image-overlay" id="case-image-overlay" aria-hidden="true">
+  <div class="cs-image-overlay-panel">
+    <button class="cs-image-overlay-close" aria-label="Close image preview">×</button>
+    <div class="cs-image-overlay-content"></div>
+    <div class="cs-image-overlay-caption"></div>
+  </div>
+</div>
 <footer><div class="footer-inner">
   <span class="footer-text">Dikshit Kashyap Das · 2026</span>
   <div class="footer-links">
@@ -218,5 +225,48 @@ footer{border-top:1px solid #111;padding:32px 48px}
 <script>
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){const d=parseFloat(e.target.dataset.delay||0);setTimeout(()=>e.target.classList.add('visible'),d*1000);}});},{threshold:0.1});
 document.querySelectorAll('.anim').forEach(el=>observer.observe(el));
+
+const overlay=document.getElementById('case-image-overlay');
+const overlayContent=overlay.querySelector('.cs-image-overlay-content');
+const overlayCaption=overlay.querySelector('.cs-image-overlay-caption');
+const overlayClose=overlay.querySelector('.cs-image-overlay-close');
+
+function closeImageOverlay(){
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden','true');
+  overlayContent.innerHTML='';
+  overlayCaption.textContent='';
+  document.body.style.overflow='';
+}
+
+function openImageOverlay(wrapper){
+  const img=wrapper.querySelector('img');
+  const caption=wrapper.querySelector('.cs-image-caption');
+  if(img){
+    const clone=img.cloneNode(true);
+    overlayContent.appendChild(clone);
+  } else {
+    const text=document.createElement('div');
+    text.textContent=wrapper.textContent.trim();
+    text.style.color='#f0f0f0';
+    text.style.fontSize='14px';
+    text.style.lineHeight='1.7';
+    text.style.maxWidth='640px';
+    text.style.padding='48px';
+    overlayContent.appendChild(text);
+  }
+  overlayCaption.textContent=caption ? caption.textContent.trim() : '';
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+
+document.querySelectorAll('.cs-image').forEach((item)=>{
+  item.addEventListener('click',()=>openImageOverlay(item));
+});
+
+overlayClose.addEventListener('click',closeImageOverlay);
+overlay.addEventListener('click',(e)=>{if(e.target===overlay) closeImageOverlay();});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape' && overlay.classList.contains('active')) closeImageOverlay();});
 </script>
 </body></html>

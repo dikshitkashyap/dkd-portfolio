@@ -48,9 +48,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:0 48px;backdrop-filte
 .cs-decision-body{font-size:15px;font-weight:300;line-height:1.8;color:#999}
 .cs-callout{border-left:2px solid #333;padding:20px 24px;margin:28px 0;background:rgba(255,255,255,.02);border-radius:0 8px 8px 0}
 .cs-callout p{font-size:15px;font-weight:300;line-height:1.7;color:#AAA;font-style:italic}
-.cs-image{width:100%;border-radius:12px;border:1px solid #1a1a1a;background:#0a0a0a;overflow:hidden;margin:32px 0}
+.cs-image{width:100%;border-radius:12px;border:1px solid #1a1a1a;background:#0a0a0a;overflow:hidden;margin:32px 0;cursor:pointer;transition:transform .2s ease,border-color .2s ease}
+.cs-image:hover{transform:translateY(-1px);border-color:#222}
 .cs-image img{width:100%;display:block}
 .cs-image-placeholder{width:100%;height:320px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#444;font-size:13px;font-weight:400;letter-spacing:.04em}
+.cs-image-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:24px;z-index:200}
+.cs-image-overlay.active{display:flex}
+.cs-image-overlay-panel{position:relative;max-width:min(1080px,96vw);max-height:92vh;display:flex;flex-direction:column;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:16px;overflow:hidden}
+.cs-image-overlay-content{display:flex;align-items:center;justify-content:center;max-height:92vh;overflow:auto}
+.cs-image-overlay-content img{width:100%;height:auto;max-height:92vh;object-fit:contain;display:block}
+.cs-image-overlay-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:999px;background:rgba(10,10,10,.8);border:1px solid #2a2a2a;color:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1}
+.cs-image-overlay-caption{font-size:12px;font-weight:300;color:#aaa;padding:14px 16px;font-style:italic;background:#070707;border-top:1px solid #111}
 footer{border-top:1px solid #111;padding:32px 48px}
 .footer-inner{max-width:800px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
 .footer-text{font-size:12px;font-weight:300;color:#444}
@@ -150,9 +158,59 @@ footer{border-top:1px solid #111;padding:32px 48px}
     <a href="https://www.linkedin.com/in/dikshit-kashyap-das-711538161/">LinkedIn</a>
   </div>
 </div></footer>
+<div class="cs-image-overlay" id="case-image-overlay" aria-hidden="true">
+  <div class="cs-image-overlay-panel">
+    <button class="cs-image-overlay-close" aria-label="Close image preview">×</button>
+    <div class="cs-image-overlay-content"></div>
+    <div class="cs-image-overlay-caption"></div>
+  </div>
+</div>
 <script>
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){const d=parseFloat(e.target.dataset.delay||0);setTimeout(()=>e.target.classList.add('visible'),d*1000);}});},{threshold:0.1});
 document.querySelectorAll('.anim').forEach(el=>observer.observe(el));
+
+const overlay=document.getElementById('case-image-overlay');
+const overlayContent=overlay.querySelector('.cs-image-overlay-content');
+const overlayCaption=overlay.querySelector('.cs-image-overlay-caption');
+const overlayClose=overlay.querySelector('.cs-image-overlay-close');
+
+function closeImageOverlay(){
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden','true');
+  overlayContent.innerHTML='';
+  overlayCaption.textContent='';
+  document.body.style.overflow='';
+}
+
+function openImageOverlay(wrapper){
+  const img=wrapper.querySelector('img');
+  const caption=wrapper.querySelector('.cs-image-caption');
+  if(img){
+    const clone=img.cloneNode(true);
+    overlayContent.appendChild(clone);
+  } else {
+    const text=document.createElement('div');
+    text.textContent=wrapper.textContent.trim();
+    text.style.color='#f0f0f0';
+    text.style.fontSize='14px';
+    text.style.lineHeight='1.7';
+    text.style.maxWidth='640px';
+    text.style.padding='48px';
+    overlayContent.appendChild(text);
+  }
+  overlayCaption.textContent=caption ? caption.textContent.trim() : '';
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+
+document.querySelectorAll('.cs-image').forEach((item)=>{
+  item.addEventListener('click',()=>openImageOverlay(item));
+});
+
+overlayClose.addEventListener('click',closeImageOverlay);
+overlay.addEventListener('click',(e)=>{if(e.target===overlay) closeImageOverlay();});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape' && overlay.classList.contains('active')) closeImageOverlay();});
 </script>
 </body>
 </html>
