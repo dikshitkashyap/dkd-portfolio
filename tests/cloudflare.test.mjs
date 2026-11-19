@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import worker, {mediumFeed, RunningLog} from '../cloudflare/worker.mjs';
 import {storeAdapter} from '../cloudflare/running-log.mjs';
 import {mediaAsset} from '../cloudflare/media.mjs';
+import {readRpcResponse,createCorosClient} from '../server/coros-core.mjs';
+import apexRedirect from '../cloudflare/apex-redirect.mjs';
 
 const origin='https://www.kidshit.space';
 const secret='test-only-owner-key-longer-than-thirty-two-characters';
@@ -102,4 +104,29 @@ test('daily refresh remains disabled in staging until the old updater is stopped
   const {log,storage}=fixture({SYNC_ENABLED:'false'});
   await log.fetch(new Request('https://internal/schedule',{method:'POST'}));assert.equal(storage.alarmAt,undefined);
   log.env.SYNC_ENABLED='true';await log.fetch(new Request('https://internal/schedule',{method:'POST'}));assert(storage.alarmAt>Date.now()-100);
+});
+test('COROS replies are consumed before a persistent SSE connection closes',async()=>{
+  let cancelled=false;
+  const encoder=new TextEncoder();
+  const body=new ReadableStream({start(controller){
+    controller.enqueue(encoder.encode(': keepalive\n\ndata: {"jsonrpc":"2.0","method":"notification"}\n\n'));
+    controller.enqueue(encoder.encode('data: {"jsonrpc":"2.0","id":7,"result":{"ok":true}}\n'));
+    controller.enqueue(encoder.encode('\n'));
+    // Deliberately remains open. Waiting for response.text() would hang.
+  },cancel(){cancelled=true;}});
+  assert.deepEqual(await readRpcResponse(new Response(body,{headers:{'Content-Type':'text/event-stream'}}),7),{ok:true});
+  assert.equal(cancelled,true);
+});
+test('COROS uses Cloudflare-compatible redirect mode and rejects redirects before credentials can be forwarded',async()=>{
+  let calls=0;
+  await assert.rejects(createCorosClient('test-token',async(url,options)=>{
+    calls++;assert.equal(options.redirect,'manual');
+    return new Response(null,{status:302,headers:{Location:'https://untrusted.example'}});
+  }),/COROS request failed \(302\)/);
+  assert.equal(calls,1);
+});
+test('the apex redirect preserves the requested page and query string',()=>{
+  const response=apexRedirect.fetch(new Request('https://kidshit.space/case-bbps/?source=resume'));
+  assert.equal(response.status,301);
+  assert.equal(response.headers.get('location'),'https://www.kidshit.space/case-bbps/?source=resume');
 });

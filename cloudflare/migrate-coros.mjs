@@ -27,12 +27,31 @@ async function main() {
     console.log('Cloudflare owner key configured privately.');return;
   }
   const headers={Authorization:`Bearer ${key}`,'Content-Type':'application/json'};
+  if(process.argv[2]==='refresh') {
+    const response=await fetch(origin+'/api/coros/sync',{method:'POST',headers,signal:AbortSignal.timeout(15000)});
+    if(response.status!==202)throw new Error('Private refresh could not be queued');
+    console.log('Private Cloudflare running refresh queued.');return;
+  }
   if(process.argv[2]==='status') {
-    const response=await fetch(origin+'/api/coros/status',{headers});
+    const response=await fetch(origin+'/api/coros/status',{headers,signal:AbortSignal.timeout(15000)});
     if(!response.ok)throw new Error('Owner status unavailable');
     console.log(JSON.stringify(await response.json(),null,2));return;
   }
-  if(process.argv[2]!=='import')throw new Error('Choose configure-key, import or status');
+  if(process.argv[2]==='handover') {
+    const statusResponse=await fetch(origin+'/api/coros/status',{headers,signal:AbortSignal.timeout(15000)});
+    if(!statusResponse.ok)throw new Error('Cloudflare status unavailable');
+    const status=await statusResponse.json();
+    if(status.sync?.status!=='ready'||Date.now()-Date.parse(status.lastSuccess?.updatedAt)>3600000)throw new Error('A recent successful Cloudflare refresh is required');
+    const token=await getAPIToken();if(!token)throw new Error('Netlify sign-in required');
+    const store=getStore({name:'coros-owner-private',siteID,token,consistency:'strong'});
+    const lease=await store.getWithMetadata('sync-lease',{type:'json'});
+    if(lease?.data.owner==='cloudflare-migration') {console.log('The previous collector is already paused.');return;}
+    if(lease?.data.expiresAt>Date.now())throw new Error('The previous collector is busy; wait for it to finish');
+    const result=await store.setJSON('sync-lease',{owner:'cloudflare-migration',expiresAt:Date.parse('2100-01-01T00:00:00Z'),migratedAt:new Date().toISOString()},lease?{onlyIfMatch:lease.etag}:{onlyIfNew:true});
+    if(!result.modified)throw new Error('The previous collector changed; inspect before retrying');
+    console.log('The previous Netlify collector is paused. Cloudflare daily updates can now be enabled.');return;
+  }
+  if(process.argv[2]!=='import')throw new Error('Choose configure-key, import, refresh, handover or status');
   const token=await getAPIToken();
   if(!token)throw new Error('Netlify sign-in required');
   const store=getStore({name:'coros-owner-private',siteID,token,consistency:'strong'});

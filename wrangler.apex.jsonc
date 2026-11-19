@@ -1,0 +1,10 @@
+{
+  "$schema":"node_modules/wrangler/config-schema.json",
+  "name":"dikshit-portfolio-apex",
+  "main":"cloudflare/apex-redirect.mjs",
+  "compatibility_date":"2026-11-19",
+  "workers_dev":false,
+  "preview_urls":false,
+  "routes":[{"pattern":"kidshit.space/*","zone_id":"41a4c5fcd8343e88a803f71cd1a58ab1"}],
+  "observability":{"enabled":false}
+}

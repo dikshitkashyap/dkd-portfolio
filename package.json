@@ -16,6 +16,6 @@
     "prepare:cloudflare": "node cloudflare/build-assets.mjs",
     "preview:cloudflare": "npm run prepare:cloudflare && wrangler dev",
     "check:cloudflare": "npm run prepare:cloudflare && wrangler deploy --dry-run",
-    "deploy:cloudflare": "npm test && npm run prepare:cloudflare && wrangler deploy"
+    "deploy:cloudflare": "npm test && npm run prepare:cloudflare && wrangler deploy && wrangler deploy --config wrangler.apex.jsonc"
   }
 }

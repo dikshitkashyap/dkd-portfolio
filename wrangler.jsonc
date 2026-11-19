@@ -5,6 +5,7 @@
   "compatibility_date": "2026-11-19",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
+  "routes": [{"pattern":"www.kidshit.space/*","zone_id":"41a4c5fcd8343e88a803f71cd1a58ab1"}],
   "assets": {
     "directory": "./.cloudflare-assets",
     "binding": "ASSETS",
@@ -12,7 +13,7 @@
   },
   "vars": {
     "PUBLIC_ORIGIN": "https://www.kidshit.space",
-    "SYNC_ENABLED": "false",
+    "SYNC_ENABLED": "true",
     "MIGRATION_ENABLED": "false"
   },
   "durable_objects": {"bindings": [{"name": "RUNNING", "class_name": "RunningLog"}]},

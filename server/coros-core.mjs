@@ -70,16 +70,41 @@ export function parseRpc(body, id) {
   if (!message || message.error) throw new Error('COROS protocol error');
   return message.result;
 }
+export async function readRpcResponse(response,id) {
+  if(!response.headers.get('content-type')?.includes('text/event-stream') || !response.body)return parseRpc(await response.text(),id);
+  const reader=response.body.getReader(),decoder=new TextDecoder();
+  let buffer='',total=0;
+  try {
+    while(true) {
+      const {value,done}=await reader.read();
+      if(value){total+=value.byteLength;if(total>2_000_000)throw new Error('COROS protocol error');buffer+=decoder.decode(value,{stream:true});}
+      if(done)buffer+=decoder.decode();
+      let separator;
+      while((separator=/\r?\n\r?\n/.exec(buffer))) {
+        const event=buffer.slice(0,separator.index);buffer=buffer.slice(separator.index+separator[0].length);
+        const data=event.split(/\r?\n/).filter(l=>l.startsWith('data:')).map(l=>l.slice(5).trim()).join('\n');
+        if(!data)continue;
+        const message=JSON.parse(data);
+        if(message.id===id) {
+          if(message.error)throw new Error('COROS protocol error');
+          return message.result;
+        }
+      }
+      if(done)return parseRpc(buffer,id);
+    }
+  } finally { try {await reader.cancel();} catch {} }
+}
 export async function createCorosClient(accessToken, fetcher = fetch) {
   let session = '', sequence = 0;
   const rpc = async (method, params, notification=false) => {
     const id = notification ? undefined : ++sequence;
-    const response = await fetcher(RESOURCE, { method:'POST', redirect:'error', signal:AbortSignal.timeout(25000),
+    const response = await fetcher(RESOURCE, { method:'POST', redirect:'manual', signal:AbortSignal.timeout(25000),
       headers:{Authorization:`Bearer ${accessToken}`, 'Content-Type':'application/json', Accept:'application/json, text/event-stream', 'MCP-Protocol-Version':'2025-03-26', ...(session ? {'Mcp-Session-Id':session} : {})},
       body:JSON.stringify({jsonrpc:'2.0', ...(notification ? {} : {id}), method, params}) });
     if (!response.ok) throw new Error(`COROS request failed (${response.status})`);
     session = response.headers.get('mcp-session-id') || session;
-    return notification ? null : parseRpc(await response.text(),id);
+    if(notification){await response.body?.cancel();return null;}
+    return readRpcResponse(response,id);
   };
   await rpc('initialize',{protocolVersion:'2025-03-26',capabilities:{},clientInfo:{name:'kidshit-portfolio-running',version:'1.0.0'}});
   await rpc('notifications/initialized',{},true);

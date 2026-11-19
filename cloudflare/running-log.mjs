@@ -40,7 +40,7 @@ export class RunningLog {
       createHash('sha256').update(secret).digest(), createHash('sha256').update(value).digest());
   }
   async tokenRequest(params) {
-    const response=await fetch(`${ISSUER}/oauth2/token`, {method:'POST',redirect:'error',signal:AbortSignal.timeout(20000),
+    const response=await fetch(`${ISSUER}/oauth2/token`, {method:'POST',redirect:'manual',signal:AbortSignal.timeout(20000),
       headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(params)});
     if (!response.ok) throw new Error('COROS authorization needs reconnecting');
     const data=await response.json();
@@ -128,17 +128,31 @@ export class RunningLog {
     if (current?.data.expiresAt>Date.now()) return;
     const lease=await store.setJSON('sync-lease',{owner,expiresAt:Date.now()+16*60000},current?{onlyIfMatch:current.etag}:{onlyIfNew:true});
     if (!lease.modified) return;
+    let phase='credentials';
     try {
       const today=localDate();
       if ((await store.get('last-success'))?.date===today) return;
-      const query=await createCorosClient(await this.ownerAccess()), rows=[];
-      for (const [start,end] of monthWindows(today)) rows.push(...await collectWindow(query,start,end));
+      const access=await this.ownerAccess();phase='mcp-initialize';
+      const query=await createCorosClient(access,async(url,options)=>{
+        phase=`mcp-${JSON.parse(options.body).method.replaceAll('/','-')}-headers`;
+        const response=await fetch(url,options);
+        phase=phase.replace(/-headers$/,'-body');
+        return response;
+      }), rows=[];
+      for (const [start,end] of monthWindows(today)) {
+        phase=`collect-${start.slice(0,7)}`;
+        rows.push(...await collectWindow(query,start,end));
+      }
+      phase='summary';
       const summary=makeSummary(rows);
       await this.summary.setJSON(String(summary.year),summary);
       await store.setJSON('last-success',{date:today,updatedAt:summary.updatedAt});
       await store.setJSON('sync-status',{status:'ready',updatedAt:summary.updatedAt});
-    } catch {
-      await store.setJSON('sync-status',{status:'failed',attemptedAt:new Date().toISOString()});
+    } catch (error) {
+      const message=String(error?.message||'');
+      const reason=/^(COROS (query failed|protocol error|request failed \(\d{3}\)|running query unavailable|authorization needs reconnecting|has not been authorized)|Unrecognized or incomplete COROS response|Invalid COROS running record|Daily COROS result limit reached|Latest run time is ambiguous|Conflicting duplicate activity|Invalid COROS token response)$/.test(message)?message:'Internal refresh error';
+      const errorClass=['Error','TypeError','SyntaxError','TimeoutError','AbortError'].includes(error?.name)?error.name:'Error';
+      await store.setJSON('sync-status',{status:'failed',phase,reason,errorClass,attemptedAt:new Date().toISOString()});
       // No provider response, activity details, credentials or request URL is logged.
       throw new Error('Daily running refresh failed; previous summary retained');
     } finally {

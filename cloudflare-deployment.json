@@ -1,0 +1,43 @@
+{
+  "url": "https://www.kidshit.space/",
+  "worker": "dikshit-portfolio",
+  "accountId": "71d14adeaeb25eb60b979a2827ed9b4d",
+  "versionId": "a54b3593-d704-43c5-8b94-d4dec214b1b4",
+  "date": "2026-11-19",
+  "status": "published-and-verified",
+  "testsPassed": 42,
+  "verifiedRoutes": [
+    "/",
+    "/case-upi-mdr/",
+    "/case-bbps/",
+    "/case-upi/",
+    "/resume.pdf"
+  ],
+  "mediumFeedVerified": true,
+  "mediaByteRangesVerified": true,
+  "printerIntroBrowserVerified": true,
+  "corosConnectionCopied": true,
+  "corosSummaryUpdatedAt": "2026-11-19T10:21:02.845Z",
+  "dailyUpdaterEnabled": true,
+  "migrationImportEnabled": false,
+  "domain": "www.kidshit.space",
+  "nameservers": [
+    "adaline.ns.cloudflare.com",
+    "hank.ns.cloudflare.com"
+  ],
+  "authoritativeDnsChanged": true,
+  "netlifyFallbackPreserved": true,
+  "dnsProvider": "Cloudflare",
+  "registrar": "Hostinger",
+  "domainActivation": "live-verified",
+  "freshCorosRefreshVerified": true,
+  "corosDiagnostic": null,
+  "githubBranch": "https://github.com/dikshitkashyap/dkd-portfolio/tree/cloudflare-migration",
+  "apexWorker": "dikshit-portfolio-apex",
+  "apexVersionId": "3b2a0bfe-b394-4e5d-aeaa-863005d48c4c",
+  "oldNetlifyCollectorPaused": true,
+  "netlifyOriginAddressesRemoved": true,
+  "allFiveMediaByteRangesVerified": true,
+  "apexRedirectVerified": true,
+  "ownerApiProtectionVerified": true
+}

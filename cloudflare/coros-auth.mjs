@@ -23,7 +23,7 @@ export async function connect(request, services) {
     const store=privateStore();
     let client=await store.get('client',{type:'json'});
     if (!client) {
-      const response=await fetch(`${ISSUER}/connect/register`,{method:'POST',redirect:'error',signal:AbortSignal.timeout(20000),headers:{'Content-Type':'application/json'},body:JSON.stringify({client_name:'Dikshit portfolio running log',redirect_uris:[CALLBACK],grant_types:['authorization_code','refresh_token'],response_types:['code'],token_endpoint_auth_method:'none'})});
+      const response=await fetch(`${ISSUER}/connect/register`,{method:'POST',redirect:'manual',signal:AbortSignal.timeout(20000),headers:{'Content-Type':'application/json'},body:JSON.stringify({client_name:'Dikshit portfolio running log',redirect_uris:[CALLBACK],grant_types:['authorization_code','refresh_token'],response_types:['code'],token_endpoint_auth_method:'none'})});
       if (!response.ok) throw new Error(`Client registration failed (${response.status})`);
       const data=await response.json();
       if (typeof data.client_id!=='string' || data.client_secret) throw new Error('Unsupported client registration');
