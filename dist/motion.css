@@ -1,0 +1,100 @@
+/* Motion supports interaction; content never depends on an animation finishing. */
+:root { --motion-ease: cubic-bezier(.22, 1, .36, 1); }
+@media (prefers-reduced-motion: no-preference) {
+  a, button, .note-card h3, summary h3 {
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+  }
+  .header nav a { position: relative; }
+  .header nav a::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -5px;
+    height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 220ms var(--motion-ease);
+  }
+  .header nav a:is(:hover, :focus-visible)::after { transform: scaleX(1); }
+  :is(.text-link, .notes-all, .email-link, .button, .back-link) > span[aria-hidden],
+  .next-project strong > span, .note-read > span[aria-hidden] {
+    display: inline-block; transition: transform 220ms var(--motion-ease);
+  }
+  :is(.text-link, .notes-all, .email-link, .button):is(:hover, :focus-visible) > span[aria-hidden],
+  .next-project:is(:hover, :focus-visible) strong > span,
+  .note-card:is(:hover, :focus-visible) .note-read > span[aria-hidden] {
+    transform: translate(3px, -3px);
+  }
+  .back-link:is(:hover, :focus-visible) > span[aria-hidden] { transform: translateX(-3px); }
+  .button, .menu-toggle, .race-photo-close {
+    transition: transform 160ms var(--motion-ease), color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+  }
+  :is(.button, .menu-toggle, .race-photo-close):active { transform: translateY(1px); }
+  summary:is(:hover, :focus-visible) h3 { color: var(--link-hover); }
+  .expand { transition: transform 280ms var(--motion-ease); }
+  .race-blip {
+    transition: transform 200ms var(--motion-ease), box-shadow 200ms ease, background-color 160ms ease, border-color 160ms ease;
+  }
+  .race-distance { transition: color 160ms ease; }
+  .race-milestone:has(.race-photo-trigger:is(:hover, :focus-visible, [aria-expanded=true])) .race-blip {
+    transform: scale(1.1); box-shadow: 0 0 0 4px rgb(48 183 89 / 12%);
+  }
+  .race-milestone:has(.race-photo-trigger:active) .race-blip { transform: scale(.9); }
+  .race-photo-preview { animation-duration: 220ms; animation-timing-function: var(--motion-ease); }
+  /* Native details remain usable in browsers without intrinsic-size transitions. */
+  @supports (interpolate-size: allow-keywords) and (transition-behavior: allow-discrete) {
+    details.project { interpolate-size: allow-keywords; }
+    details.project::details-content {
+      block-size: 0; opacity: 0; overflow: clip;
+      transition: block-size 320ms var(--motion-ease), opacity 200ms ease, content-visibility 320ms allow-discrete;
+    }
+    details.project[open]::details-content { block-size: auto; opacity: 1; }
+    details.project[open] .project-body { animation: none; }
+  }
+  @media (max-width: 760px) {
+    .header nav.is-open { animation: menu-enter 180ms var(--motion-ease); }
+    .header nav a::after { left: 10px; right: 10px; bottom: 6px; }
+    .menu-lines { position: relative; border: 0; }
+    .menu-lines::before, .menu-lines::after {
+      content: ''; position: absolute; left: 0; width: 23px; height: 1.5px; background: currentColor;
+      transition: transform 200ms var(--motion-ease);
+    }
+    .menu-lines::before { top: 0; }
+    .menu-lines::after { top: 10px; }
+    .menu-toggle[aria-expanded=true] .menu-lines::before { transform: translateY(5px) rotate(45deg); }
+    .menu-toggle[aria-expanded=true] .menu-lines::after { transform: translateY(-5px) rotate(-45deg); }
+  }
+  @keyframes menu-enter { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+}
+/* Also covers existing effects in the shared styles and race photo component. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* A drawn divider identifies the open project without moving its contents. */
+.project > summary { position: relative; }
+.project > summary::before {
+  content: ''; position: absolute; top: -1px; left: 0; right: 0;
+  height: 1px; background: var(--green); pointer-events: none;
+  transform: scaleX(0); transform-origin: left;
+}
+.project[open] > summary::before { transform: scaleX(1); }
+
+/* A small annotation lives in the existing margin beside the article title. */
+.note-card h3 { position: relative; }
+.note-card h3::before {
+  content: ''; position: absolute; left: -13px; top: .12em;
+  width: 2px; height: 1em; max-height: 30px; background: var(--green);
+  transform: scaleY(0); transform-origin: top; opacity: 0; pointer-events: none;
+}
+.note-card:focus-visible h3::before { transform: scaleY(1); opacity: 1; }
+@media (hover: hover) {
+  .note-card:hover h3::before { transform: scaleY(1); opacity: 1; }
+}
+
+/* Reading progress is purely visual and never intercepts navigation. */
+.reading-progress {
+  position: fixed; inset: 0 0 auto; height: 2px; z-index: 50;
+  background: var(--green); transform: scaleX(0); transform-origin: left;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .project[open] > summary::before { transition: transform 420ms var(--motion-ease); }
+  .note-card h3::before { transition: transform 180ms var(--motion-ease), opacity 140ms ease; }
+}

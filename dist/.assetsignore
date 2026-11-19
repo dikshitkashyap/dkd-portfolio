@@ -1,0 +1,3 @@
+# The old host's proxy rule is replaced by the Cloudflare feed handler.
+_redirects
+.DS_Store

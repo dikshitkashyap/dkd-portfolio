@@ -1,0 +1,44 @@
+.grit-body{display:grid;grid-template-columns:1fr 1.3fr;gap:72px;padding:30px 0 14px;border-top:1px solid var(--line)}
+.grit-motto{font-size:10px;letter-spacing:1.5px;color:var(--muted)}
+.grit-intro :is(h3,h4){font-size:clamp(30px,3vw,42px);font-weight:550;line-height:1.1;letter-spacing:-1.5px;margin:14px 0 16px}
+.grit-intro p{font-size:15px;line-height:1.6;color:var(--muted);max-width:340px;margin:0}
+.running-details{padding-top:8px}
+.milestone-ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));position:relative;gap:16px}
+.milestone-ledger:before{content:"";position:absolute;top:5px;left:5px;right:calc(33.333% - 5px);height:1px;background:var(--line)}
+.race-milestone{display:flex;flex-direction:column;align-items:flex-start;position:relative;gap:7px;min-width:0;border:0;background:none;color:var(--ink);padding:0 0 10px;text-align:left;font-family:inherit}
+.race-photo-trigger{cursor:pointer;display:inline-flex;flex-direction:column;align-items:flex-start;gap:7px;width:max-content;max-width:100%;padding:0;border:0;background:none;color:inherit;font-family:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:5px;text-decoration-thickness:1px}
+.race-blip{position:relative;height:10px;width:10px;border:1px solid var(--ink);border-radius:50%;background:var(--ink);box-sizing:border-box;margin-bottom:10px;z-index:1}
+.training-blip{background:var(--paper);border-color:var(--green)}
+.race-distance{font-size:24px;font-weight:500;letter-spacing:-.8px;white-space:nowrap;line-height:1.2}
+.race-distance small{font-size:13px;letter-spacing:0;font-weight:400}
+.race-description{font-size:12px;line-height:1.35}
+.race-state{font-size:11px;color:var(--muted)}
+.race-milestone:has(.race-photo-trigger:is(:hover,:focus-visible,[aria-expanded=true])) .race-blip{background:var(--green);border-color:var(--green)}
+.race-photo-trigger:is(:hover,:focus-visible,[aria-expanded=true]){color:var(--link-hover)}
+.race-photo-preview{position:fixed;z-index:100;box-sizing:border-box;width:300px;max-width:calc(100vw - 32px);background:var(--paper);border:1px solid var(--line);padding:9px;transform:rotate(-1deg);animation:photo-in .18s ease-out}.race-photo-preview[hidden]{display:none}.race-photo-preview img{display:block;max-height:min(58vh,500px);width:100%;object-fit:contain;background:var(--image-ground)}.race-photo-close{position:absolute;top:16px;right:16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:32px;height:32px;font-size:23px;line-height:1;cursor:pointer}.race-photo-caption{display:flex;flex-direction:column;gap:4px;padding:12px 4px 6px;font-size:14px;font-weight:500}.race-photo-caption>span:last-child{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:1px;text-transform:uppercase}@keyframes photo-in{from{opacity:0;transform:translateY(8px) rotate(-1deg)}to{opacity:1;transform:translateY(0) rotate(-1deg)}}.running-log{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.log-metrics{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.log-metrics>div>span{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;line-height:1.4}
+.log-metrics strong{font-size:15px;line-height:1.5;font-weight:450;font-variant-numeric:tabular-nums}
+.log-footer{display:flex;justify-content:space-between;align-items:baseline;gap:15px;margin-top:12px;font-size:10px;color:var(--muted)}
+.log-refresh{font-family:inherit;font-size:10px;border:0;border-bottom:1px solid var(--line);padding:3px 0;background:none;color:var(--muted);cursor:pointer}
+.log-refresh:disabled{opacity:.5;cursor:wait}
+.running-log[data-state=stale] [data-log-status]{color:var(--warning)}
+@media(max-width:760px){.grit-body{grid-template-columns:1fr;gap:28px;padding-top:24px}.grit-intro :is(h3,h4){font-size:32px}.grit-intro p{max-width:370px}.running-details{padding:0}.milestone-ledger{gap:12px}.race-distance{font-size:22px}.race-description{font-size:11px}.race-state{font-size:10px}.race-photo-preview{transform:none;animation:none}.race-photo-close{width:40px;height:40px;top:14px;right:14px}.log-metrics{gap:18px}.log-metrics strong{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.race-photo-preview{animation:none}}
+
+@media(max-width:760px),(pointer:coarse){.race-distance{min-height:44px;display:inline-flex;align-items:center}.race-photo-close{min-width:44px;min-height:44px}}
+
+/* The timeline dot shares the accessible race button with its distance. */
+.race-photo-trigger .race-blip::after{content:"";position:absolute;inset:-12px;border-radius:50%}
+.race-photo-trigger .race-distance{display:inline-flex;align-items:baseline;gap:4px}
+@media(max-width:760px),(pointer:coarse){.race-milestone>.race-distance{align-items:baseline}}
+
+/* Mobile uses a persistent card in the section, leaving the milestones accessible. */
+.race-photo-mobile-home:empty{display:none}
+@media(max-width:760px){
+ .race-photo-mobile-home .race-photo-preview{position:relative;inset:auto!important;z-index:1;width:min(100%,300px);max-width:100%;margin:18px auto 0;padding:8px;transform:none;animation:none}
+ .race-photo-mobile-home .race-photo-preview img{width:100%;height:min(34svh,280px);max-height:none;object-fit:contain;background:transparent}
+ .race-photo-mobile-home .race-photo-caption{font-size:12px;padding:10px 4px 4px;gap:3px}
+ .race-photo-mobile-home .race-photo-caption>span:last-child{font-size:9px;letter-spacing:.8px}
+ .race-photo-mobile-home .race-photo-close{top:8px;right:8px}
+}

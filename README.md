@@ -1,27 +1,15 @@
-# DKD Portfolio — Dikshit Kashyap Das
+# Dikshit Kashyap Das — Cloudflare portfolio migration
 
-## Files
+This branch preserves the existing main branch and adds the current portfolio source for Cloudflare hosting.
 
-| File | Description |
-|---|---|
-| `index.html` | Main portfolio page — hero, selected works, writing, carousels, about |
-| `case-upi.html` | Case study — BlackBuck Pay UPI on PPI Wallet |
-| `case-bbps.html` | Case study — BBPS FASTag Recharges |
-| `case-iocl.html` | Case study — IOCL Generic Cards |
-| `designer-card.jsx` | Framer code component — the flippable designer card |
+- `dist/`: public portfolio, case studies, resume and media.
+- `cloudflare/`: hosting routes, media compatibility and private COROS updater.
+- `server/coros-core.mjs`: shared COROS parsing and collection logic.
+- `netlify/`: previous-host functions retained for rollback.
+- `tests/`: privacy, authentication, media and interaction checks.
 
-## Deploy to Netlify
-Drop the entire folder (excluding `designer-card.jsx`) into Netlify's deploy area.
+Run `npm ci`, then `npm run preview:cloudflare`. Run `npm run check:cloudflare` to check packaging. Publishing is manual and must be explicitly requested: `npm run deploy:cloudflare`.
 
-## Framer Component
-Import `designer-card.jsx` via Assets → Code → + in your Framer project.
+The temporary Cloudflare site is https://dikshit-portfolio.dkashyap450.workers.dev . Domain cutover and updater handover remain pending. See CLOUDFLARE-MIGRATION.md for verified state and remaining steps.
 
-## Google Sheets CMS
-Sheet ID: `1cGgs-c0Oao0Bx22cZByd6kIJyAkuA2LZPPMzHxOTN70`
-The index.html fetches content from this sheet on load.
-Tabs: Hero, Case Studies, Articles, Carousels, About
-
-## Fonts used
-- DM Serif Display (headings)
-- Outfit (body)
-- JetBrains Mono (card component)
+Private settings, provider credentials, local account data and source documents are excluded from version control. Never commit `.env`, `.dev.vars`, `.netlify`, `.wrangler` or `.migration-private`.

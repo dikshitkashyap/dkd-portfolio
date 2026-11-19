@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dikshit-portfolio",
+  "main": "cloudflare/worker.mjs",
+  "compatibility_date": "2026-11-19",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "assets": {
+    "directory": "./.cloudflare-assets",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/medium-feed.xml", "/printer/printer-printing.mp4", "/book/cover.mp4", "/assets/audio/ambre.mp3", "/assets/audio/paper-click.mp3", "/printer/printer-sound.mp3"]
+  },
+  "vars": {
+    "PUBLIC_ORIGIN": "https://www.kidshit.space",
+    "SYNC_ENABLED": "false",
+    "MIGRATION_ENABLED": "false"
+  },
+  "durable_objects": {"bindings": [{"name": "RUNNING", "class_name": "RunningLog"}]},
+  "migrations": [{"tag": "v1", "new_sqlite_classes": ["RunningLog"]}],
+  "triggers": {"crons": ["0 2 * * *"]},
+  "observability": {"enabled": false}
+}

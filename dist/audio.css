@@ -1,0 +1,37 @@
+/* Persistent access to appearance and sound, without taking the header out of flow. */
+html { scroll-padding-top:calc(var(--header-height, 96px) + 20px); }
+.header { position:sticky; top:0; z-index:60; background:var(--paper); }
+.header-actions { display:flex; align-items:center; gap:8px; order:2; flex-shrink:0; }
+.header-actions .theme-toggle { order:2; }
+.music-toggle {
+  order:1; display:inline-grid; place-items:center; position:relative;
+  width:40px; height:40px; flex:0 0 40px; padding:0;
+  border:1px solid var(--line); border-radius:50%; background:transparent;
+  color:var(--ink); cursor:pointer;
+}
+.music-toggle[hidden] { display:none; }
+.music-toggle:hover { background:var(--surface); border-color:var(--muted); }
+.music-toggle svg { grid-area:1/1; width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.music-toggle .music-play { margin-left:2px; }
+.music-toggle .music-pause { display:none; }
+.music-toggle[aria-pressed=true] { color:var(--green); }
+.music-toggle[aria-pressed=true] .music-play { display:none; }
+.music-toggle[aria-pressed=true] .music-pause { display:block; }
+.music-toggle[aria-busy=true] { opacity:.65; }
+[data-background-music] { display:none; }
+.reading-progress { z-index:90; }
+.skip { z-index:120; }
+@media(prefers-reduced-motion:no-preference) {
+  .music-toggle { transition:background-color 160ms ease,border-color 160ms ease,color 160ms ease,transform 160ms var(--motion-ease); }
+  .music-toggle:active { transform:scale(.94); }
+}
+@media(max-width:760px) {
+  .header { position:sticky; }
+  .music-toggle { width:44px; height:44px; flex-basis:44px; }
+}
+
+footer>div{flex-wrap:wrap;row-gap:12px}
+.click-sounds-toggle{font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.click-sounds-toggle[hidden]{display:none}
+.click-sounds-toggle:hover{color:var(--link-hover)}
+@media(max-width:760px){.sound-preferences{margin-top:14px}}

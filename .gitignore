@@ -1,0 +1,11 @@
+node_modules/
+.netlify/
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+.wrangler/
+.cloudflare-assets/
+.migration-private/
+.DS_Store

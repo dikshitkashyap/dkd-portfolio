@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@netlify/blobs": "11.1.7"
+  },
+  "devDependencies": {
+    "netlify-cli": "27.16.0",
+    "wrangler": "4.165.0"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "test": "node --experimental-test-module-mocks --test tests/*.test.mjs",
+    "build:functions": "netlify functions:build --src netlify/functions --functions .netlify/functions",
+    "prepare:cloudflare": "node cloudflare/build-assets.mjs",
+    "preview:cloudflare": "npm run prepare:cloudflare && wrangler dev",
+    "check:cloudflare": "npm run prepare:cloudflare && wrangler deploy --dry-run",
+    "deploy:cloudflare": "npm test && npm run prepare:cloudflare && wrangler deploy"
+  }
+}

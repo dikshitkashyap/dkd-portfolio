@@ -1,0 +1,50 @@
+/* FASTag Payments uses the shared portfolio typography, theme and motion. */
+.mdr-highlights { display:flex; flex-wrap:wrap; gap:16px 30px; padding:24px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:34px; }
+.mdr-highlights span { font-size:13px; color:var(--muted); }
+.mdr-highlights strong { color:var(--ink); font-weight:550; }
+.mdr-section-content > p,.mdr-section-content > h3 { max-width:760px; margin-left:78px; }
+.mdr-section-content > p { font-size:19px; line-height:1.7; color:var(--muted); margin-top:0; margin-bottom:25px; }
+.mdr-section-content > p strong { color:var(--ink); font-weight:550; }
+.mdr-section-content > h3 { font-size:29px; line-height:1.25; letter-spacing:-.7px; font-weight:550; margin-top:35px; margin-bottom:22px; }
+.mdr-section-content > h3:first-child { margin-top:12px; }
+.mdr-section-content p a { color:var(--ink); text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:4px; }
+.mdr-section-content p a:hover { color:var(--link-hover); }
+.mdr-board { margin:34px 0 46px; }
+.mdr-board-scroll { overflow-x:auto; border:1px solid var(--line); background:#fafafa; scrollbar-width:thin; scrollbar-color:var(--muted) var(--surface); }
+.mdr-board-scroll:focus-visible { outline:2px solid var(--green); outline-offset:5px; }
+.mdr-board .mdr-board-scroll img { display:block; width:100%; min-width:1080px; height:auto; max-width:none; border:0; }
+.mdr-board figcaption { display:flex; flex-wrap:wrap; gap:8px 24px; line-height:1.6; }
+.mdr-board figcaption > a { margin-left:auto; color:var(--ink); border-bottom:1px solid var(--line); white-space:nowrap; }
+.mdr-pan-hint { display:none; font-size:12px; width:100%; }
+.mdr-table-wrap { max-width:930px; margin:28px 0 38px 78px; overflow-x:auto; }
+.mdr-table-wrap table { width:100%; border-collapse:collapse; font-size:16px; text-align:left; }
+.mdr-table-wrap th,.mdr-table-wrap td { padding:17px 18px; border-bottom:1px solid var(--line); vertical-align:top; }
+.mdr-table-wrap thead th { border-top:1px solid var(--line); font-weight:500; font-size:13px; color:var(--muted); background:var(--surface); }
+.mdr-table-wrap tbody th { font-weight:400; }
+.mdr-table-wrap td { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.mdr-table-wrap th:first-child { padding-left:0; }
+.mdr-table-wrap thead th:first-child { padding-left:18px; }
+.mdr-concept { border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:34px 0; }
+.mdr-concept > summary { grid-template-columns:1fr auto 16px; font-size:17px; font-weight:500; }
+.mdr-concept > summary > span:not(.expand) { color:var(--muted); font-size:12px; font-weight:400; }
+.mdr-concept .mdr-board { margin:10px 0 25px; }
+#trade-offs .mdr-section-content > h3:not(:first-child) { border-top:1px solid var(--line); padding-top:30px; }
+.mdr-visual-reference { font-size:15px !important; }
+@media(max-width:1100px) { .mdr-pan-hint { display:block; } }
+@media(max-width:760px) {
+  .mdr-section-content > p,.mdr-section-content > h3,.mdr-table-wrap { margin-left:0; }
+  .mdr-section-content > p { font-size:17px; line-height:1.65; }
+  .mdr-section-content > h3 { font-size:25px; margin-top:28px; }
+  .mdr-highlights { gap:12px; flex-direction:column; margin-bottom:24px; padding:20px 0; }
+  .mdr-table-wrap table { font-size:14px; }
+  .mdr-table-wrap th,.mdr-table-wrap td { padding:14px 8px; }
+  .mdr-table-wrap thead th { font-size:12px; }
+  .mdr-table-wrap thead th:first-child { padding-left:8px; }
+  .mdr-board { margin:28px 0 35px; }
+  .mdr-board figcaption { font-size:12px; gap:7px; }
+  .mdr-board figcaption > a { margin-left:0; }
+  .mdr-concept > summary { font-size:15px; gap:12px; }
+  .mdr-concept .expand { grid-column:3; grid-row:auto; }
+}
+.mdr-case .case-intro h1 > br { display:none; }
+.mdr-case .case-intro h1 > span { display:block; font-size:clamp(30px,3.8vw,52px); line-height:1.13; letter-spacing:-.035em; margin-top:16px; max-width:1000px; }

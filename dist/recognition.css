@@ -1,0 +1,10 @@
+/* Official badge sits in the hero's top-right margin and scrolls with the page. */
+.has-feature-badge{position:relative}
+.featured-badge{position:absolute;top:14px;right:0;display:block;width:140px;line-height:0;border-radius:4px;z-index:1}
+.featured-badge img{display:block;width:100%;height:auto}
+.featured-badge .badge-dark{display:none}
+html[data-theme=dark] .featured-badge .badge-light{display:none}
+html[data-theme=dark] .featured-badge .badge-dark{display:block}
+.featured-badge:focus-visible{outline:2px solid var(--green);outline-offset:5px}
+@media(prefers-reduced-motion:no-preference){.featured-badge{transition:transform 160ms ease}.featured-badge:hover{transform:translateY(-2px)}}
+@media(max-width:760px){.language-hero.has-feature-badge{padding-top:88px}.featured-badge{top:12px;width:104px;min-height:44px}}
