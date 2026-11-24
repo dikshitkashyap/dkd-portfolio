@@ -2,7 +2,7 @@
   "url": "https://www.kidshit.space/",
   "worker": "dikshit-portfolio",
   "accountId": "71d14adeaeb25eb60b979a2827ed9b4d",
-  "versionId": "a54b3593-d704-43c5-8b94-d4dec214b1b4",
+  "versionId": "6fb4e36a-72b7-4ccb-b076-57f2f4c24e62",
   "date": "2026-11-19",
   "status": "published-and-verified",
   "testsPassed": 42,
@@ -34,10 +34,20 @@
   "corosDiagnostic": null,
   "githubBranch": "https://github.com/dikshitkashyap/dkd-portfolio/tree/cloudflare-migration",
   "apexWorker": "dikshit-portfolio-apex",
-  "apexVersionId": "3b2a0bfe-b394-4e5d-aeaa-863005d48c4c",
+  "apexVersionId": "c4369296-9faa-4522-9518-d63b834e001e",
   "oldNetlifyCollectorPaused": true,
   "netlifyOriginAddressesRemoved": true,
   "allFiveMediaByteRangesVerified": true,
   "apexRedirectVerified": true,
-  "ownerApiProtectionVerified": true
+  "ownerApiProtectionVerified": true,
+  "resume": {
+    "originalFilename": "Dikshit_Kashyap_Das_Resume_Nov-65682de8.pdf",
+    "phone": "+91 9789958625",
+    "sha256": "5c3beb2112d7ac1cfde9d579eb130cab233a8d931f3cb794447bd5308fb69702",
+    "url": "https://www.kidshit.space/resume.pdf?v=5c3beb21",
+    "updatedDate": "2026-11-24",
+    "verifiedLinks": 5,
+    "publishedDate": "2026-11-24"
+  },
+  "lastUpdate": "2026-11-24"
 }
